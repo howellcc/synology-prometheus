@@ -35,3 +35,6 @@ scrape_configs:
   - job_name: 'localhost-node-exporter'
     static_configs:
       - targets: ['node-exporter:9100']
+    relabel_configs:
+      - target_label: __address__
+        replacement: ${HOSTNAME}:9115
