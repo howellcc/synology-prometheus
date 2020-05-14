@@ -9,7 +9,7 @@ ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
 
 # Throw Banner
 echo "####################"
-echo "# Synology Install Prometheus Stack Tool v$VERSION"
+echo "# Synology Install Prometheus Stack Tool v${VERSION}"
 echo "####################"
 
 echo; echo ">>>>>> Setting up system File Structure"
@@ -57,6 +57,10 @@ docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
 if [[ $? -eq 0 ]]; then
   echo; echo ">>>>>> Install successful, cleaning up..."
   rm -rf ${PROMETHEUS_ROOT}/docker-compose.yml
+  if [[ $? -eq 0 ]]; then
+    echo "Removed temporaray docker-compose file"
+  elif [[ $? -ne 0]]; then
+    echo "Could not remove temporary docker-compose file at ${PROMETHEUS_ROOT}/docker-compose.yml"
 elif [[ $? -ne 0 ]]; then
   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
   exit 1
