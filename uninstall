@@ -27,7 +27,13 @@ echo; echo ">>>>>> Cleaning filesystem"
 clean_filesystem=( ${PROMETHEUS_ROOT} ${ALERTMANAGER_ROOT} ${GRAFANA_ROOT} )
 for i in "${clean_filesystem[@]}"; do
   if [[ -d ${i} ]]; then
-    echo "Deleted folder ${i}"
+    rm -rf ${i}
+    if [[ $? -eq 0 ]]; then
+      echo "Deleted folder ${i}"
+    elif [[ $? -ne 0 ]]; then
+      echo "Could not delete folder ${i}. Error code was $?"
+      exit 1
+    fi
   fi
 done
 
