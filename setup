@@ -1,28 +1,55 @@
 #!/usr/bin/env sh
 
+# Global Variables
 DOCKER_VOLUME="/volume1/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
+GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
+ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
 
-folders=( "configs" "data/alertmanager" "data/grafana" "data/prometheus" )
-for i in "${folders[@]}"; do
+# Setup Prometheus File Structure
+prometheus_folders=( "configs" "data/prometheus" )
+for i in "${prometheus_folders[@]}"; do
   [ ! -d ${PROMETHEUS_ROOT}/${i} ] && mkdir -p ${PROMETHEUS_ROOT}/${i} \
   && echo "folder created ${PROMETHEUS_ROOT}/${i}"
 done
 
-chown -R 65534:65534 ${PROMETHEUS_ROOT}/data/prometheus #nobody userid
-chown -R 472:472 ${PROMETHEUS_ROOT}/data/grafana #grafana userid
-
-configs=( "grafana.ini" "prometheus.yml" )
-for i in "${configs[@]}"; do
-  curl -fsSL https://raw.githubusercontent.com/prahaladramji/synology-prometheus/master/configs/${i} -o ${PROMETHEUS_ROOT}/configs/${i}
-  echo "config created ${PROMETHEUS_ROOT}/configs/${i}"
+# Setup Grafana File Structure
+grafana_folders=( "configs" "data/grafana" )
+for i in "${grafana_folders[@]}"; do
+  [ ! -d ${GRAFANA_ROOT}/${i} ] && mkdir -p ${GRAFANA_ROOT}/${i} \
+  && echo "folder created ${GRAFANA_ROOT}/${i}"
 done
 
-curl -fsSL https://raw.githubusercontent.com/prahaladramji/synology-prometheus/master/docker-compose.yml \
+# Setup Alertmanager File Structure
+alertmanager_folders=( "configs" "data/alertmanager" )
+for i in "${alertmanager_folders[@]}"; do
+  [ ! -d ${ALERTMANAGER_ROOT}/${i} ] && mkdir -p ${ALERTMANAGER_ROOT}/${i} \
+  && echo "folder created ${ALERTMANAGER_ROOT}/${i}"
+done
+
+# Set permissions on the data file structures
+chown -R 65534:65534 ${PROMETHEUS_ROOT}/data/prometheus #nobody userid
+chown -R 65534:65534 ${ALERTMANAGER_ROOT}/data/alertmanager #nobody userid
+chown -R 472:472 ${GRAFANA_ROOT}/data/grafana #grafana userid
+
+# Download the default configs
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/prometheus.yml -o ${PROMETHEUS_ROOT}/configs/prometheus.yml
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
+
+# Run docker-compose to stand up containers
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/docker-compose.yml \
 | sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
 echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
 docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
+if [[ $? -eq 0 ]]; then
+  echo "Install successful, cleaning up..."
+  rm -rf ${PROMETHEUS_ROOT}/docker-compose.yml
+elif [[ $? -ne 0 ]]; then
+  echo "Error during docker-compose, docker-compose exited with $?"
+  exit 1
+fi
 
 echo "
 #############################################

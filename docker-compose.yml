@@ -10,8 +10,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ${PROMETHEUS_ROOT}/configs/grafana.ini:/etc/grafana/grafana.ini
-      - ${PROMETHEUS_ROOT}/data/grafana:/var/lib/grafana
+      - ${GRAFANA_ROOT}/configs/grafana.ini:/etc/grafana/grafana.ini
+      - ${GRAFANA_ROOT}/data/grafana:/var/lib/grafana
 
   prometheus:
     image: prom/prometheus
@@ -33,7 +33,9 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ${PROMETHEUS_ROOT}/data/alertmanager:/alertmanager
+      - ${ALERTMANAGER_ROOT}/configs/alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ${ALERTMANAGER_ROOT}/data/alertmanager:/alertmanager
+
 
   node-exporter:
     privileged: true
