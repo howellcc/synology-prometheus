@@ -12,8 +12,9 @@ echo "############################################################"
 echo "# Synology Install Prometheus Stack Tool v${VERSION}"
 echo "############################################################"
 
-echo; echo ">>>>>> Setting up system File Structure"
 # Setup Prometheus File Structure
+echo; echo ">>>>>> Setting up system File Structure"
+
 prometheus_folders=( "configs" "data" )
 for i in "${prometheus_folders[@]}"; do
   [ ! -d ${PROMETHEUS_ROOT}/${i} ] && mkdir -p ${PROMETHEUS_ROOT}/${i} \

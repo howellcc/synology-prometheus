@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 # Global Variables
+VERSION=$(curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/version | cat)
 DOCKER_VOLUME="/volume1/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
@@ -9,6 +10,11 @@ ALERTMANAGER_ID=$(docker ps -a | grep alertmanager | awk '{print $1}')
 PROMETHEUS_ID=$(docker ps -a | grep prometheus | awk '{print $1}')
 GRAFANA_ID=$(docker ps -a | grep grafana | awk '{print $1}')
 NODE_EXPORTER_ID=$(docker ps -a | grep node-exporter | awk '{print $1}')
+
+# Throw Banner
+echo "############################################################"
+echo "# Synology Install Prometheus Stack Tool v${VERSION}"
+echo "############################################################"
 
 # Always cd so we're not in a workdir
 cd /volume1/docker
