@@ -10,6 +10,9 @@ PROMETHEUS_ID=$(docker ps -a | grep prometheus | awk '{print $1}')
 GRAFANA_ID=$(docker ps -a | grep grafana | awk '{print $1}')
 NODE_EXPORTER_ID=$(docker ps -a | grep node-exporter | awk '{print $1}')
 
+# Always cd so we're not in a workdir
+cd /volume1/docker
+
 # Delete Docker Containers
 echo "Cleaning containers"
 container_id=( ${ALERTMANAGER_ID} ${PROMETHEUS_ID} ${GRAFANA_ID} ${NODE_EXPORTER_ID} )
