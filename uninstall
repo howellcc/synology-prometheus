@@ -38,4 +38,4 @@ for i in "${clean_filesystem[@]}"; do
 done
 
 # Finish
-echo; echo "Uninstall complete"
+echo; echo ">>>>>> Uninstall complete"
