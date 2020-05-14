@@ -7,30 +7,30 @@ GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
 
 # Setup Prometheus File Structure
-prometheus_folders=( "configs" "data/prometheus" )
+prometheus_folders=( "configs" "data" )
 for i in "${prometheus_folders[@]}"; do
   [ ! -d ${PROMETHEUS_ROOT}/${i} ] && mkdir -p ${PROMETHEUS_ROOT}/${i} \
   && echo "folder created ${PROMETHEUS_ROOT}/${i}"
 done
 
 # Setup Grafana File Structure
-grafana_folders=( "configs" "data/grafana" )
+grafana_folders=( "configs" "data" )
 for i in "${grafana_folders[@]}"; do
   [ ! -d ${GRAFANA_ROOT}/${i} ] && mkdir -p ${GRAFANA_ROOT}/${i} \
   && echo "folder created ${GRAFANA_ROOT}/${i}"
 done
 
 # Setup Alertmanager File Structure
-alertmanager_folders=( "configs" "data/alertmanager" )
+alertmanager_folders=( "configs" "data" )
 for i in "${alertmanager_folders[@]}"; do
   [ ! -d ${ALERTMANAGER_ROOT}/${i} ] && mkdir -p ${ALERTMANAGER_ROOT}/${i} \
   && echo "folder created ${ALERTMANAGER_ROOT}/${i}"
 done
 
 # Set permissions on the data file structures
-chown -R 65534:65534 ${PROMETHEUS_ROOT}/data/prometheus #nobody userid
-chown -R 65534:65534 ${ALERTMANAGER_ROOT}/data/alertmanager #nobody userid
-chown -R 472:472 ${GRAFANA_ROOT}/data/grafana #grafana userid
+chown -R 65534:65534 ${PROMETHEUS_ROOT}/data #nobody userid
+chown -R 65534:65534 ${ALERTMANAGER_ROOT}/data #nobody userid
+chown -R 472:472 ${GRAFANA_ROOT}/data #grafana userid
 
 # Download the default configs
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/prometheus.yml -o ${PROMETHEUS_ROOT}/configs/prometheus.yml
