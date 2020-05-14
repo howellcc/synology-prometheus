@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+
+# Global Variables
+DOCKER_VOLUME="/volume1/docker"
+PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
+GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
+ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
+ALERTMANAGER_ID=$(docker ps -a | grep alertmanager | awk '{print $1}')
+PROMETHEUS_ID=$(docker ps -a | grep prometheus | awk '{print $1}')
+GRAFANA_ID=$(docker ps -a | grep grafana | awk '{print $1}')
+
+# Delete Docker Containers
+echo "Cleaning containers"
+container_id=( ${ALERTMANAGER_ID} ${PROMETHEUS_ID} ${GRAFANA_ID} )
+for i in "${container_id[@]}"; do
+  DNAME=$(docker ps -af "id=${i} | awk '!/NAME/ {print $NF}'")
+  echo "Removing  docker container id ${i} and name ${DNAME}"
+  docker rm -f ${i}
+fi
+
+# Cleanup Filesystem
+echo "Cleaning filesystem"
+rm -rf ${PROMETHEUS_ROOT}
+rm -rf ${ALERTMANAGER_ROOT}
+rm -rf ${GRAFANA_ROOT}
+
+# Finish
+echo "Uninstall complete"
