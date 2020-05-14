@@ -43,7 +43,6 @@ chown -R 472:472 ${GRAFANA_ROOT}/data #grafana userid
 
 # Download the default configs
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/prometheus.yml -o ${PROMETHEUS_ROOT}/configs/prometheus.yml
-sed -i "s/\${HOSTNAME}/${HOSTNAME//\//\\/}/g" ${PROMETHEUS_ROOT}/configs/prometheus.yml
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/prometheus.rules -o ${PROMETHEUS_ROOT}/configs/prometheus.rules
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
