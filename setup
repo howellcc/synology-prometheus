@@ -8,9 +8,9 @@ GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
 
 # Throw Banner
-echo "####################"
-echo "# Synology Install Prometheus Stack Tool v${VERSION}"
-echo "####################"
+echo "############################################################"
+echo "# Synology Install Prometheus Stack Tool v${VERSION"
+echo "############################################################"
 
 echo; echo ">>>>>> Setting up system File Structure"
 # Setup Prometheus File Structure
