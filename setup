@@ -6,7 +6,7 @@ DOCKER_VOLUME="/volume1/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
-HOSTNAME=$(hostname)
+HOSTNAME=$(hostname -s)
 
 # Throw Banner
 echo "############################################################"
