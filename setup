@@ -59,8 +59,9 @@ if [[ $? -eq 0 ]]; then
   rm -rf ${PROMETHEUS_ROOT}/docker-compose.yml
   if [[ $? -eq 0 ]]; then
     echo "Removed temporaray docker-compose file"
-  elif [[ $? -ne 0]]; then
+  elif [[ $? -ne 0 ]]; then
     echo "Could not remove temporary docker-compose file at ${PROMETHEUS_ROOT}/docker-compose.yml"
+  fi
 elif [[ $? -ne 0 ]]; then
   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
   exit 1
