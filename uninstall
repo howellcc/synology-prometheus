@@ -24,9 +24,12 @@ done
 
 # Cleanup Filesystem
 echo "Cleaning filesystem"
-rm -rf ${PROMETHEUS_ROOT}
-rm -rf ${ALERTMANAGER_ROOT}
-rm -rf ${GRAFANA_ROOT}
+clean_filesystem=( ${PROMETHEUS_ROOT} ${ALERTMANAGER_ROOT} ${GRAFANA_ROOT} )
+for i in "${clean_filesystem[@]}"; do
+  if [[ -d ${PROMETHEUS_ROOT}/${i} ]]; then
+    echo "Deleted folder ${i}"
+  fi
+done
 
 # Finish
 echo "Uninstall complete"
