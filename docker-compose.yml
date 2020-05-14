@@ -24,7 +24,11 @@ services:
       - "9090:9090"
     volumes:
       - ${PROMETHEUS_ROOT}/configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${PROMETHEUS_ROOT}/configs/prometheus.rules:/etc/prometheus/prometheus.rules
       - ${PROMETHEUS_ROOT}/data:/prometheus
+    command:
+      - "--web.enable-lifecycle"
+      - "--web.external-url http://${HOSTNAME}:9090"
 
   alertmanager:
     image: prom/alertmanager
@@ -53,3 +57,14 @@ services:
       - "--path.sysfs=/host/sys"
       - "--collector.filesystem.ignored-mount-points"
       - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
+
+  prometheus-auto-reloader:
+    image: billykwooten/prometheus_reloader
+    container_name: prometheus_reloader
+    restart: always
+    volumes:
+      - ${PROMETHEUS_ROOT}/configs:/mnt
+    command:
+      - "http://localhost:9090/-/reload"
+      - "/mnt/prometheus.yml"
+      - "/mnt/prometheus.rules"
