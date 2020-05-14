@@ -38,8 +38,10 @@ curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/ma
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
 
 # Run docker-compose to stand up containers
-curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/docker-compose.yml \
-| sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/docker-compose.yml
+sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
+sed "s/\${ALERTMANAGER_ROOT}/${ALERTMANAGER_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
+sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
 echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
 docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
