@@ -28,7 +28,7 @@ services:
       - ${PROMETHEUS_ROOT}/data:/prometheus
     command:
       - "--web.enable-lifecycle"
-      - "--web.external-url http://${HOSTNAME}:9090"
+      - "--web.external-url=http://${HOSTNAME}:9090"
 
   alertmanager:
     image: prom/alertmanager
