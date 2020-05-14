@@ -6,12 +6,12 @@
 
 ### Install
 ```bash
-curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/setup | sudo sh
+curl --no-sessionid -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/setup | sudo sh
 ```
 
 ### Uninstall
 ```bash
-curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/uninstall | sudo sh
+curl --no-sessionid -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/uninstall | sudo sh
 ```
 
 #### Endpoints
