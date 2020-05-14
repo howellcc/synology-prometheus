@@ -53,6 +53,7 @@ elif [[ $? -ne 0 ]]; then
   exit 1
 fi
 
+# Finish
 echo "
 #############################################
 Grafana       http://`hostname`:3000
