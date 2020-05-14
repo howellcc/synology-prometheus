@@ -14,7 +14,7 @@ NODE_EXPORTER_ID=$(docker ps -a | grep node-exporter | awk '{print $1}')
 echo "Cleaning containers"
 container_id=( ${ALERTMANAGER_ID} ${PROMETHEUS_ID} ${GRAFANA_ID} ${NODE_EXPORTER_ID} )
 for i in "${container_id[@]}"; do
-  DNAME=$(docker ps -af "id=${i} | awk '!/NAME/ {print $NF}'")
+  DNAME=$(docker ps -af "id=${i}" | awk '!/NAME/ {print $NF}')
   echo "Removing  docker container id ${i} and name ${DNAME}"
   docker rm -f ${i}
 done
