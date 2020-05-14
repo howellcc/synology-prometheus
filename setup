@@ -63,7 +63,7 @@ elif [[ $? -ne 0 ]]; then
 fi
 
 # Finish
-echo; echo "
+echo "
 #############################################
 Grafana       http://`hostname`:3000
 Prometheus    http://`hostname`:9090
