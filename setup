@@ -1,11 +1,18 @@
 #!/usr/bin/env sh
 
 # Global Variables
+VERSION=$(curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/version | cat)
 DOCKER_VOLUME="/volume1/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
 
+# Throw Banner
+echo "####################"
+echo "# Synology Install Prometheus Stack Tool v$VERSION"
+echo "####################"
+
+echo; echo ">>>>>> Setting up system File Structure"
 # Setup Prometheus File Structure
 prometheus_folders=( "configs" "data" )
 for i in "${prometheus_folders[@]}"; do
@@ -37,6 +44,7 @@ curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/ma
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
 
+echo; echo ">>>>>> Creating docker-compose file"
 # Run docker-compose to stand up containers
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/docker-compose.yml \
 | sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" \
@@ -44,20 +52,22 @@ curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/ma
 | sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
 echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
+echo; echo ">>>>>> Running docker-compose file"
 docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
 if [[ $? -eq 0 ]]; then
-  echo "Install successful, cleaning up..."
+  echo; echo ">>>>>> Install successful, cleaning up..."
   rm -rf ${PROMETHEUS_ROOT}/docker-compose.yml
 elif [[ $? -ne 0 ]]; then
-  echo "Error during docker-compose, docker-compose exited with $?"
+  echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
   exit 1
 fi
 
 # Finish
-echo "
+echo; echo "
 #############################################
 Grafana       http://`hostname`:3000
 Prometheus    http://`hostname`:9090
 Alertmanager  http://`hostname`:9093
 Node-Exporter http://`hostname`:9100/metrics
+#############################################
 "
