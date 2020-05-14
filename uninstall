@@ -17,7 +17,7 @@ for i in "${container_id[@]}"; do
   DNAME=$(docker ps -af "id=${i} | awk '!/NAME/ {print $NF}'")
   echo "Removing  docker container id ${i} and name ${DNAME}"
   docker rm -f ${i}
-fi
+done
 
 # Cleanup Filesystem
 echo "Cleaning filesystem"
