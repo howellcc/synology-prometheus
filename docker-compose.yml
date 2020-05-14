@@ -27,6 +27,7 @@ services:
       - ${PROMETHEUS_ROOT}/configs/prometheus.rules:/etc/prometheus/prometheus.rules
       - ${PROMETHEUS_ROOT}/data:/prometheus
     command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
       - "--web.enable-lifecycle"
       - "--web.external-url=http://${HOSTNAME}:9090"
 

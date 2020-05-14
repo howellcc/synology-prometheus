@@ -79,6 +79,6 @@ Grafana                  http://`hostname`:3000
 Prometheus               http://`hostname`:9090
 Alertmanager             http://`hostname`:9093
 Node-Exporter            http://`hostname`:9100/metrics
-prometheus-reloader      nil
+Prometheus_reloader      nil
 #############################################
 "
