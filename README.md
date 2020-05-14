@@ -9,6 +9,11 @@
 curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/setup | sudo sh
 ```
 
+### Uninstall
+```bash
+curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/uninstall | sudo sh
+```
+
 #### Endpoints
 - Grafana `http://<synology ip/hostname>:3000` (this may take upto 15 seconds to start up.)
 - Prometheus `http://<synology ip/hostname>:9090`
