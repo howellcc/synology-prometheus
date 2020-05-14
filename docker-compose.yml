@@ -41,6 +41,7 @@ services:
       - ${ALERTMANAGER_ROOT}/configs/alertmanager.yml:/etc/alertmanager/alertmanager.yml
       - ${ALERTMANAGER_ROOT}/data:/alertmanager
     command:
+      - "--config.file=/etc/prometheus/alertmanager.yml"
       - "--web.external-url=http://${HOSTNAME}:9090"
 
   node-exporter:
