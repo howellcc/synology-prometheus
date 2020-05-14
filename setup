@@ -69,6 +69,7 @@ elif [[ $? -ne 0 ]]; then
 fi
 
 # Finish
+echo ">>>>>> Program Information"
 echo "
 #############################################
 Grafana       http://`hostname`:3000
