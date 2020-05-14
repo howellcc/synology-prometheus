@@ -16,7 +16,7 @@ container_id=( ${ALERTMANAGER_ID} ${PROMETHEUS_ID} ${GRAFANA_ID} ${NODE_EXPORTER
 for i in "${container_id[@]}"; do
   DNAME=$(docker ps -af "id=${i}" | awk '!/NAME/ {print $NF}')
   echo "Removing  docker container id ${i} and name ${DNAME}"
-  docker rm -f ${i}
+  docker rm -f ${i} > /dev/null 2>&1
 done
 
 # Cleanup Filesystem
