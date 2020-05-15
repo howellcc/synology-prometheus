@@ -74,3 +74,5 @@ services:
 
 networks:
   default:
+    external:
+      name: container_network
