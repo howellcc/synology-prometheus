@@ -70,3 +70,9 @@ services:
       - "http://prometheus:9090/-/reload"
       - "/mnt/prometheus.yml"
       - "/mnt/prometheus.rules"
+
+
+networks:
+  default:
+    external:
+      name: bridge
