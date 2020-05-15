@@ -43,6 +43,6 @@ for i in "${clean_filesystem[@]}"; do
     fi
   fi
 done
-
+rm -rf ${DOCKER_VOLUME}/docker-compose.yml
 # Finish
 echo; echo ">>>>>> Uninstall complete"

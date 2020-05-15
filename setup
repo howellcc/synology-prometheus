@@ -54,19 +54,14 @@ curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/ma
 | sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" \
 | sed "s/\${ALERTMANAGER_ROOT}/${ALERTMANAGER_ROOT//\//\\/}/g" \
 | sed "s/\${HOSTNAME}/${HOSTNAME//\//\\/}/g" \
-| sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
-echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
+| sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${DOCKER_VOLUME}/docker-compose.yml
+echo "docker-compose file created ${DOCKER_VOLUME}/docker-compose.yml"
 
 echo; echo ">>>>>> Running docker-compose file"
-docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
+docker-compose -f ${DOCKER_VOLUME}/docker-compose.yml up -d
 if [[ $? -eq 0 ]]; then
   echo; echo ">>>>>> Install successful, cleaning up..."
-  rm -rf ${PROMETHEUS_ROOT}/docker-compose.yml
-  if [[ $? -eq 0 ]]; then
-    echo "Removed temporaray docker-compose file ${PROMETHEUS_ROOT}/docker-compose.yml"
-  elif [[ $? -ne 0 ]]; then
-    echo "Could not remove temporary docker-compose file ${PROMETHEUS_ROOT}/docker-compose.yml"
-  fi
+  rm -rf ${DOCKER_VOLUME}/docker-compose.yml
 elif [[ $? -ne 0 ]]; then
   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
   exit 1
