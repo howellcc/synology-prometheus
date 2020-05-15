@@ -24,7 +24,6 @@ services:
       - "9090:9090"
     volumes:
       - ${PROMETHEUS_ROOT}/configs:/etc/prometheus/configs
-      - ${PROMETHEUS_ROOT}/configs:/etc/prometheus/configs
       - ${PROMETHEUS_ROOT}/data:/prometheus
     command:
       - "--config.file=/etc/prometheus/configs/prometheus.yml"
