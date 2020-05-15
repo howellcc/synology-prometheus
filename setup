@@ -60,8 +60,7 @@ echo "docker-compose file created ${DOCKER_VOLUME}/docker-compose.yml"
 echo; echo ">>>>>> Running docker-compose file"
 docker-compose -f ${DOCKER_VOLUME}/docker-compose.yml up -d
 if [[ $? -eq 0 ]]; then
-  echo; echo ">>>>>> Install successful, cleaning up..."
-  rm -rf ${DOCKER_VOLUME}/docker-compose.yml
+  echo; echo ">>>>>> Install successful, docker-compose successful"
 elif [[ $? -ne 0 ]]; then
   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
   exit 1
