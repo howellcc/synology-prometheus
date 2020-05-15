@@ -23,11 +23,11 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ${PROMETHEUS_ROOT}/configs/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ${PROMETHEUS_ROOT}/configs/prometheus.rules:/etc/prometheus/prometheus.rules
+      - ${PROMETHEUS_ROOT}/configs:/etc/prometheus/configs
+      - ${PROMETHEUS_ROOT}/configs:/etc/prometheus/configs
       - ${PROMETHEUS_ROOT}/data:/prometheus
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--config.file=/etc/prometheus/configs/prometheus.yml"
       - "--web.enable-lifecycle"
       - "--web.external-url=http://${HOSTNAME}:9090"
 
@@ -38,10 +38,10 @@ services:
     ports:
       - "9093:9093"
     volumes:
-      - ${ALERTMANAGER_ROOT}/configs/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ${ALERTMANAGER_ROOT}/configs:/etc/alertmanager/configs
       - ${ALERTMANAGER_ROOT}/data:/alertmanager
     command:
-      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
       - "--web.external-url=http://${HOSTNAME}:9090"
 
   node-exporter:
