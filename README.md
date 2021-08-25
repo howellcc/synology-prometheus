@@ -2,7 +2,7 @@
 - [Synology Docker](https://www.synology.com/en-global/dsm/packages/Docker) package already installed.
 - SSH access to synology.
 - Administrator user access.
-- In docker on synology there is a "container_network" bridge network setup
+- In docker on synology there is a "bridgecustom" bridge network setup
 
 
 ### Install
