@@ -7,12 +7,12 @@
 
 ### Install
 ```bash
-curl --no-sessionid -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/setup | sudo sh
+curl --no-sessionid -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/setup | sudo sh
 ```
 
 ### Uninstall
 ```bash
-curl --no-sessionid -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/uninstall | sudo sh
+curl --no-sessionid -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/uninstall | sudo sh
 ```
 
 #### Endpoints

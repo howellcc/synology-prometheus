@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 # Global Variables
-VERSION=$(curl -fsSL https://raw.githubusercontent.com/billykwooten/synology-prometheus/master/version | cat)
-DOCKER_VOLUME="/volume1/docker"
+VERSION=$(curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/version | cat)
+DOCKER_VOLUME="/volume1/docker2"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
@@ -18,7 +18,7 @@ echo "# Synology Install Prometheus Stack Tool v${VERSION}"
 echo "############################################################"
 
 # Always cd so we're not in a workdir
-cd /volume1/docker
+cd /volume1/docker2
 
 # Delete Docker Containers
 echo; echo ">>>>>> Cleaning containers"
