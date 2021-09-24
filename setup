@@ -37,8 +37,8 @@ for i in "${alertmanager_folders[@]}"; do
 done
 
 # Set permissions on the data file structures
-# chown -R 65534:65534 ${PROMETHEUS_ROOT}/data #nobody userid
-# chown -R 65534:65534 ${ALERTMANAGER_ROOT}/data #nobody userid
+chown -R 99:99 ${PROMETHEUS_ROOT}/data #nobody userid
+chown -R 99:99 ${ALERTMANAGER_ROOT}/data #nobody userid
 # chown -R 472:472 ${GRAFANA_ROOT}/data #grafana userid
 
 # Download the default configs
