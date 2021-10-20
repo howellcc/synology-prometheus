@@ -37,8 +37,8 @@ for i in "${alertmanager_folders[@]}"; do
 done
 
 # Set permissions on the data file structures
-chown -R 99:99 ${PROMETHEUS_ROOT}/data #nobody userid
-chown -R 99:99 ${ALERTMANAGER_ROOT}/data #nobody userid
+# chown -R 99:99 ${PROMETHEUS_ROOT}/data #nobody userid
+# chown -R 99:99 ${ALERTMANAGER_ROOT}/data #nobody userid
 # chown -R 472:472 ${GRAFANA_ROOT}/data #grafana userid
 
 # Download the default configs
@@ -48,17 +48,22 @@ curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/
 curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
 curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
 
+chown -R 1032:100 ${PROMETHEUS_ROOT} #dockeruser userid
+chown -R 1032:100 ${ALERTMANAGER_ROOT} #dockeruser userid
+chown -R 1032:100 ${GRAFANA_ROOT} #dockeruser userid
+
+
 echo; echo ">>>>>> Creating docker-compose file"
 # Run docker-compose to stand up containers
 curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/docker-compose.yml \
 | sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" \
 | sed "s/\${ALERTMANAGER_ROOT}/${ALERTMANAGER_ROOT//\//\\/}/g" \
 | sed "s/\${HOSTNAME}/${HOSTNAME//\//\\/}/g" \
-| sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${DOCKER_VOLUME}/docker-compose.yml
-echo "docker-compose file created ${DOCKER_VOLUME}/docker-compose.yml"
+| sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
+echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
 echo; echo ">>>>>> Running docker-compose file"
-docker-compose -f ${DOCKER_VOLUME}/docker-compose.yml up -d
+docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
 if [[ $? -eq 0 ]]; then
   echo; echo ">>>>>> Install successful, docker-compose successful"
 elif [[ $? -ne 0 ]]; then

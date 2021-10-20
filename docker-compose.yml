@@ -14,8 +14,7 @@ services:
       - ${GRAFANA_ROOT}/data:/var/lib/grafana
 
   prometheus:
-    #image: prom/prometheus
-    image: quay.io/prometheus/prometheus
+    image: prom/prometheus
     container_name: prometheus
     restart: always
     links:
@@ -32,8 +31,7 @@ services:
       - "--web.external-url=http://${HOSTNAME}:9090"
 
   alertmanager:
-    #image: prom/alertmanager
-    image: quay.io/prometheus/alertmanager
+    image: prom/alertmanager
     container_name: alertmanager
     restart: always
     ports:
@@ -41,14 +39,13 @@ services:
     volumes:
       - ${ALERTMANAGER_ROOT}/configs:/etc/alertmanager/configs
       - ${ALERTMANAGER_ROOT}/data:/alertmanager
-    command:
-      - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
-      - "--web.external-url=http://${HOSTNAME}:9093"
+    # command:
+    #   - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
+    #   - "--web.external-url=http://${HOSTNAME}:9093"
 
   node-exporter:
     privileged: true
-    #image: prom/node-exporter
-    image: quay.io/prometheus/node-exporter
+    image: prom/node-exporter
     container_name: node-exporter
     restart: always
     ports:
