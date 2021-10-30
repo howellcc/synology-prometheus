@@ -62,14 +62,14 @@ curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/
 | sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
 echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
-echo; echo ">>>>>> Running docker-compose file"
-docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
-if [[ $? -eq 0 ]]; then
-  echo; echo ">>>>>> Install successful, docker-compose successful"
-elif [[ $? -ne 0 ]]; then
-  echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
-  exit 1
-fi
+# echo; echo ">>>>>> Running docker-compose file"
+# docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
+# if [[ $? -eq 0 ]]; then
+#   echo; echo ">>>>>> Install successful, docker-compose successful"
+# elif [[ $? -ne 0 ]]; then
+#   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
+#   exit 1
+# fi
 
 # Finish
 echo ">>>>>> Program Information"
