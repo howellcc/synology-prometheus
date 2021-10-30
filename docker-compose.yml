@@ -67,7 +67,7 @@ services:
     volumes:
       - ${PROMETHEUS_ROOT}/configs:/mnt
     command:
-      - "http://prometheus:9090/-/reload"
+      - "http://${HOSTNAME}:9090/-/reload"
       - "/mnt/prometheus.yml"
       - "/mnt/prometheus.rules"
 
