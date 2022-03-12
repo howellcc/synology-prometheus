@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 # Global Variables
-VERSION=$(curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/version | cat)
-DOCKER_VOLUME="/volume1/docker2"
+REPO_URL="https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe"
+VERSION=$(curl -fsSL ${REPO_URL}/version | cat)
+DOCKER_VOLUME="/home/chowell/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
@@ -42,34 +43,34 @@ done
 # chown -R 472:472 ${GRAFANA_ROOT}/data #grafana userid
 
 # Download the default configs
-curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/prometheus.yml -o ${PROMETHEUS_ROOT}/configs/prometheus.yml
+curl -fsSL ${REPO_URL}/configs/prometheus.yml -o ${PROMETHEUS_ROOT}/configs/prometheus.yml
 sed -i "s/\${HOSTNAME}/${HOSTNAME//\//\\/}/g" ${PROMETHEUS_ROOT}/configs/prometheus.yml
-curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/prometheus.rules -o ${PROMETHEUS_ROOT}/configs/prometheus.rules
-curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
-curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
+curl -fsSL ${REPO_URL}/configs/prometheus.rules -o ${PROMETHEUS_ROOT}/configs/prometheus.rules
+curl -fsSL ${REPO_URL}/configs/alertmanager.yml -o ${ALERTMANAGER_ROOT}/configs/alertmanager.yml
+curl -fsSL ${REPO_URL}/configs/grafana.ini -o ${GRAFANA_ROOT}/configs/grafana.ini
 
-chown -R 1032:100 ${PROMETHEUS_ROOT} #dockeruser userid
-chown -R 1032:100 ${ALERTMANAGER_ROOT} #dockeruser userid
-chown -R 1032:100 ${GRAFANA_ROOT} #dockeruser userid
+#chown -R 1032:100 ${PROMETHEUS_ROOT} #dockeruser userid
+#chown -R 1032:100 ${ALERTMANAGER_ROOT} #dockeruser userid
+#chown -R 1032:100 ${GRAFANA_ROOT} #dockeruser userid
 
 
 echo; echo ">>>>>> Creating docker-compose file"
 # Run docker-compose to stand up containers
-curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/docker-compose.yml \
+curl -fsSL ${REPO_URL}/docker-compose.yml \
 | sed "s/\${PROMETHEUS_ROOT}/${PROMETHEUS_ROOT//\//\\/}/g" \
 | sed "s/\${ALERTMANAGER_ROOT}/${ALERTMANAGER_ROOT//\//\\/}/g" \
 | sed "s/\${HOSTNAME}/${HOSTNAME//\//\\/}/g" \
 | sed "s/\${GRAFANA_ROOT}/${GRAFANA_ROOT//\//\\/}/g" > ${PROMETHEUS_ROOT}/docker-compose.yml
 echo "docker-compose file created ${PROMETHEUS_ROOT}/docker-compose.yml"
 
-# echo; echo ">>>>>> Running docker-compose file"
-# docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
-# if [[ $? -eq 0 ]]; then
-#   echo; echo ">>>>>> Install successful, docker-compose successful"
-# elif [[ $? -ne 0 ]]; then
-#   echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
-#   exit 1
-# fi
+echo; echo ">>>>>> Running docker-compose file"
+docker-compose -f ${PROMETHEUS_ROOT}/docker-compose.yml up -d
+if [[ $? -eq 0 ]]; then
+  echo; echo ">>>>>> Install successful, docker-compose successful"
+elif [[ $? -ne 0 ]]; then
+  echo; echo ">>>>>> Error during docker-compose, docker-compose exited with $?"
+  exit 1
+fi
 
 # Finish
 echo ">>>>>> Program Information"

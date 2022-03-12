@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 
 # Global Variables
-VERSION=$(curl -fsSL https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe/version | cat)
-DOCKER_VOLUME="/volume1/docker2"
+REPO_URL="https://raw.githubusercontent.com/howellcc/synology-prometheus/ForMe"
+VERSION=$(curl -fsSL ${REPO_URL}/version | cat)
+DOCKER_VOLUME="/home/chowell/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
@@ -18,7 +19,7 @@ echo "# Synology Install Prometheus Stack Tool v${VERSION}"
 echo "############################################################"
 
 # Always cd so we're not in a workdir
-cd /volume1/docker2
+cd ${DOCKER_VOLUME}
 
 # Delete Docker Containers
 echo; echo ">>>>>> Cleaning containers"
