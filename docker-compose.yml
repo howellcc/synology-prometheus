@@ -72,7 +72,7 @@ services:
       - "/mnt/prometheus.rules"
 
 
-networks:
-  default:
-    external:
-      name: bridgecustom
+# networks:
+#   default:
+#     external:
+#       name: bridgecustom
