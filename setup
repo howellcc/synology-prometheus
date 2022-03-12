@@ -7,7 +7,7 @@ DOCKER_VOLUME="/home/chowell/docker"
 PROMETHEUS_ROOT="${DOCKER_VOLUME}/prometheus"
 GRAFANA_ROOT="${DOCKER_VOLUME}/grafana"
 ALERTMANAGER_ROOT="${DOCKER_VOLUME}/alertmanager"
-HOSTNAME=$(hostname -s)
+HOSTNAME="nuc.local"
 
 # Throw Banner
 echo "############################################################"
