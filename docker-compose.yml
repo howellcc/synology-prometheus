@@ -39,9 +39,9 @@ services:
     volumes:
       - ${ALERTMANAGER_ROOT}/configs:/etc/alertmanager/configs
       - ${ALERTMANAGER_ROOT}/data:/alertmanager
-    # command:
-    #   - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
-    #   - "--web.external-url=http://${HOSTNAME}:9093"
+    command:
+      - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
+      - "--web.external-url=http://${HOSTNAME}:9093"
 
   node-exporter:
     privileged: true
