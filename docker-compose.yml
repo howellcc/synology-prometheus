@@ -13,7 +13,7 @@ services:
       - ${GRAFANA_ROOT}/configs/grafana.ini:/etc/grafana/grafana.ini
       - ${GRAFANA_ROOT}/data:/var/lib/grafana
     networks:
-      - bridgecustom
+      - bridge2
 
   prometheus:
     image: prom/prometheus
@@ -32,7 +32,7 @@ services:
       - "--web.enable-lifecycle"
       - "--web.external-url=http://${HOSTNAME}:9090"
     networks:
-      - bridgecustom
+      - bridge2
 
   alertmanager:
     image: prom/alertmanager
@@ -47,7 +47,7 @@ services:
       - "--config.file=/etc/alertmanager/configs/alertmanager.yml"
       - "--web.external-url=http://${HOSTNAME}:9093"
     networks:
-      - bridgecustom
+      - bridge2
 
   node-exporter:
     privileged: true
@@ -66,7 +66,7 @@ services:
       - "--collector.filesystem.ignored-mount-points"
       - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
     networks:
-      - bridgecustom
+      - bridge2
 
   prometheus-auto-reloader:
     image: billykwooten/prometheus_reloader
@@ -79,10 +79,10 @@ services:
       - "/mnt/prometheus.yml"
       - "/mnt/prometheus.rules"
     networks:
-      - bridgecustom
+      - bridge2
 
 
 networks:
   default:
     external:
-      name: bridgecustom
+      name: bridge2
